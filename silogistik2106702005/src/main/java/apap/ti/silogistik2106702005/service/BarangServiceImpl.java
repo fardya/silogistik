@@ -49,7 +49,7 @@ public class BarangServiceImpl implements BarangService {
         } else {
             sku += "TOOL";
         }
-        int number = getAllBarang().size();
+        int number = getAllBarang().size() + 1;
         sku += String.format("%03d", number);
         return sku;
     }

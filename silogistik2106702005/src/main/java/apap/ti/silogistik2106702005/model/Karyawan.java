@@ -7,7 +7,7 @@ import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -28,7 +28,10 @@ public class Karyawan {
     @Column(name = "jenis_kelamin", nullable = false)
     private int jenisKelamin;
 
-    @NotNull
-    @Column(name = "tanggal_lahir", nullable = false)
-    private Date tanggalLahir;
+//    @NotNull
+//    @Column(name = "tanggal_lahir", nullable = false)
+//    private Date tanggalLahir;
+//
+//    @Transient
+//    private int usia;
 }

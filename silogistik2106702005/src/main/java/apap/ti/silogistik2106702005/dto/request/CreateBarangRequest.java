@@ -11,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class CreateBarangRequest {
+    private String sku;
     private int tipeBarang;
     private String merk;
     private Long hargaBarang;

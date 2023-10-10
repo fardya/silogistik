@@ -36,9 +36,11 @@ public class BarangController {
     }
 
     @PostMapping("barang/tambah")
-    public void addBarang(@ModelAttribute Barang barang, Model model) {
-        String sku = barangService.generateSku(barang.getTipeBarang());
-        barang.setSku(sku);
+    public void addBarang(@ModelAttribute CreateBarangRequest barangDTO, Model model) {
+        String sku = barangService.generateSku(barangDTO.getTipeBarang());
+        barangDTO.setSku(sku);
+
+        var barang = barangMapper.createBarangRequestToBarang(barangDTO);
         barangService.addBarang(barang);
     }
 

@@ -8,7 +8,7 @@ import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Getter
@@ -29,7 +29,7 @@ public class PermintaanPengiriman {
 
     @NotNull
     @Column(name = "is_cancelled", nullable = false)
-    private Boolean isCancelled;
+    private Boolean isCancelled = Boolean.FALSE;
 
     @NotNull
     @Column(name = "nama_penerima", nullable = false)
@@ -53,9 +53,9 @@ public class PermintaanPengiriman {
 
     @NotNull
     @Column(name = "waktu_permintaan", nullable = false)
-    private LocalDateTime waktuPermintaan;
+    private LocalTime waktuPermintaan;
 
-//    @ManyToOne(fetch = FetchType.EAGER) // otomatis load karyawan
-//    @JoinColumn(name = "id_karyawan", referencedColumnName = "id")
-//    private BigInteger idKaryawan;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_karyawan", referencedColumnName = "id")
+    private Karyawan karyawan;
 }
