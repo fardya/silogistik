@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    <title>Tambah Barang</title>
+</head>
+
+<body>
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2>Tambah Barang</h2>
+                <br>
+                <form th:action="@{/buku/create}" th:object="${barangDTO}" method="POST">
+                    Merk Barang: <br>
+                    <input class="form-control" type="text" th:field="*{merk}" />
+                    <br><br>
+
+                    Tipe Barang: <br>
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <select class="form-control" name="tipeBarang" id="tipeBarang" th:field="*{tipeBarang}">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <br><br>
+
+                    Harga: <br>
+                    <input required class="form-control" type="number" th:field="*{hargaBarang}" />
+                    <br><br>
+
+                    <div style="text-align: center;">
+                        <a class="btn btn-danger" href="/">Batal</a>
+                        <button class="btn btn-primary" type="submit">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
