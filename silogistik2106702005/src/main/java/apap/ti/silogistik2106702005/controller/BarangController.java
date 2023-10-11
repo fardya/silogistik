@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -24,6 +25,12 @@ public class BarangController {
     public String listBarang(Model model) {
         List<Barang> listBarang = barangService.getAllBarang();
         model.addAttribute("listBarang", listBarang);
+
+        List<Integer> totalStok = new ArrayList<>();
+        for (Barang barang : listBarang) {
+            totalStok.add(barangService.countStok(barang));
+        }
+        model.addAttribute("totalStok", totalStok);
 
         return "viewall-barang";
     }
@@ -48,7 +55,10 @@ public class BarangController {
     @GetMapping("/barang/{idBarang}")
     public String detailBarang(@PathVariable("idBarang") String sku, Model model) {
         var barang = barangService.getBarangBySku(sku);
+        int totalStok = barangService.countStok(barang);
+
         model.addAttribute("barang", barang);
+        model.addAttribute("totalStok", totalStok);
 
         return "view-barang";
     }

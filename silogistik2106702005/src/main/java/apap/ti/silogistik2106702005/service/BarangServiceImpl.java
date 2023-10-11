@@ -1,6 +1,7 @@
 package apap.ti.silogistik2106702005.service;
 
 import apap.ti.silogistik2106702005.model.Barang;
+import apap.ti.silogistik2106702005.model.GudangBarang;
 import apap.ti.silogistik2106702005.repository.BarangDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,5 +53,13 @@ public class BarangServiceImpl implements BarangService {
         int number = getAllBarang().size() + 1;
         sku += String.format("%03d", number);
         return sku;
+    }
+
+    public int countStok(Barang barang) {
+        int total = 0;
+        for (GudangBarang gudangBarang : barang.getListGudangBarang()) {
+            total += gudangBarang.getStok();
+        }
+        return total;
     }
 }

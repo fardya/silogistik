@@ -9,7 +9,7 @@
 </head>
 
 <body>
-<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+<nav th:replace="~{fragments/navbar :: navbar('Barang')}"></nav>
 <br>
 <div class="container">
     <div class="card m-4">
@@ -50,10 +50,19 @@
 
             <div class="row">
                 <div class="col-4">
+                    <p>Total Stok</p>
+                </div>
+                <div class="col-8">
+                    <p th:text="': ' + ${totalStok}"></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4">
                     <p>Harga</p>
                 </div>
                 <div class="col-8">
-                    <p th:text="': ' + ${barang.hargaBarang}"></p>
+                    <p th:text="': Rp' + ${barang.hargaBarang}"></p>
                 </div>
             </div>
 
@@ -71,7 +80,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="gb, iterationStatus: ${listGudangBarang}">
+                <tr th:each="gb, iterationStatus: ${barang.listGudangBarang}">
                     <td scope="row" class="text-center" th:text="${iterationStatus.count}"></td>
                     <td class="text-center" th:text="${gb.gudang.nama}"></td>
                     <td class="text-center" th:text="${gb.gudang.alamatGudang}"></td>
