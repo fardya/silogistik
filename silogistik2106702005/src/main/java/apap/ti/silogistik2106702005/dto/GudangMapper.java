@@ -10,4 +10,6 @@ public interface GudangMapper {
     Gudang createGudangRequestToGudang(CreateGudangRequest createGudangRequest);
 
     Gudang updateGudangRequestToGudang(UpdateGudangRequest updateGudangRequest);
+
+    UpdateGudangRequest gudangToUpdateGudangRequest(Gudang gudang);
 }

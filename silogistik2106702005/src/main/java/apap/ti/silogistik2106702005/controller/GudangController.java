@@ -52,34 +52,33 @@ public class GudangController {
     public String formRestockGudang(@PathVariable("idGudang") Long id, Model model) {
         var gudang = gudangService.getGudangById(id);
         var listBarang = barangService.getAllBarang();
+        var gudangDTO = gudangMapper.gudangToUpdateGudangRequest(gudang);
 
-        model.addAttribute("gudang", gudang);
+        model.addAttribute("gudangDTO", gudangDTO);
         model.addAttribute("listBarangExisting", listBarang);
 
         return "form-restock-gudang";
     }
 
     @PostMapping(value = "/gudang/restock-barang", params = {"tambahBarang"})
-    public String addRowBarang(@ModelAttribute UpdateGudangRequest updateGudangRequest, Model model) {
-        if (updateGudangRequest.getListGudangBarang() == null || updateGudangRequest.getListGudangBarang().size() == 0) {
-            updateGudangRequest.setListGudangBarang((new ArrayList<>()));
+    public String addRowBarang(@ModelAttribute UpdateGudangRequest gudangDTO, Model model) {
+        if (gudangDTO.getListGudangBarang() == null || gudangDTO.getListGudangBarang().size() == 0) {
+            gudangDTO.setListGudangBarang((new ArrayList<>()));
         }
 
-        updateGudangRequest.getListGudangBarang().add(new GudangBarang());
-        List<Barang> listBarang = barangService.getAllBarang();
+        gudangDTO.getListGudangBarang().add(new GudangBarang());
+        var listBarangExisting = barangService.getAllBarang();
 
-        model.addAttribute("gudangDTO", updateGudangRequest);
-        model.addAttribute("listBarangExisting", listBarang);
+        model.addAttribute("gudangDTO", gudangDTO);
+        model.addAttribute("listBarangExisting", listBarangExisting);
 
         return "form-restock-gudang";
     }
 
     @PostMapping("/gudang/restock-barang")
-    public String restockBarang(@ModelAttribute UpdateGudangRequest updateGudangRequest, Model model) {
-        var gudang = gudangMapper.updateGudangRequestToGudang(updateGudangRequest);
-        gudangService.updateGudang(gudang);
-
-        model.addAttribute("gudang", updateGudangRequest);
+    public String restockBarang(@ModelAttribute UpdateGudangRequest gudangDTO, Model model) {
+        var gudangFromDTO = gudangMapper.updateGudangRequestToGudang(gudangDTO);
+        gudangService.updateGudang(gudangFromDTO);
 
         return "success-restock-gudang";
     }
