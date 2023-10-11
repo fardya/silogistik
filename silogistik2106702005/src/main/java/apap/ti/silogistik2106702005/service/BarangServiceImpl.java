@@ -32,8 +32,13 @@ public class BarangServiceImpl implements BarangService {
         } else return null;
     }
 
-    public Barang updateBarang(Barang barang) {
-        barangDb.save(barang);
+    public Barang updateBarang(Barang barangFromDto) {
+        Barang barang = getBarangBySku(barangFromDto.getSku());
+        if (barang != null) {
+            barang.setMerk(barangFromDto.getMerk());
+            barang.setHargaBarang(barangFromDto.getHargaBarang());
+            barangDb.save(barang);
+        }
         return barang;
     }
 

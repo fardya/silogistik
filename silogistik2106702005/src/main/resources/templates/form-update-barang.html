@@ -19,7 +19,8 @@
         <div class="card-body p-4">
             <div class="justify-content-center">
                 <br>
-                <form th:action="@{/barang/ubah}" th:object="${barang}" method="POST">
+                <form th:action="@{/barang/ubah}" th:object="${barangDTO}" method="POST">
+                    <input class="form-control" type="hidden" th:field="*{sku}"/>
 
                     SKU: <br>
                     <input class="form-control" type="text" th:field="*{sku}" th:disabled="${true}" />

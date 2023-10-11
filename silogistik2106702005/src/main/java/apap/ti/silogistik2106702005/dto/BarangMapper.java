@@ -10,4 +10,6 @@ public interface BarangMapper {
     Barang createBarangRequestToBarang(CreateBarangRequest createBarangRequest);
 
     Barang updateBarangRequestToBarang(UpdateBarangRequest updateBarangRequest);
+
+    UpdateBarangRequest barangToUpdateBarangRequest(Barang barang);
 }

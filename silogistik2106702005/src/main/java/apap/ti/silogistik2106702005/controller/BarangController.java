@@ -66,16 +66,20 @@ public class BarangController {
     @GetMapping("/barang/{idBarang}/ubah")
     public String formUpdateBarang(@PathVariable("idBarang") String sku, Model model) {
         var barang = barangService.getBarangBySku(sku);
+        var barangDTO = barangMapper.barangToUpdateBarangRequest(barang);
 
-        model.addAttribute("barang", barang);
+        model.addAttribute("barangDTO", barangDTO);
 
         return "form-update-barang";
     }
 
     @PostMapping("/barang/ubah")
-    public void updateBarang(@ModelAttribute UpdateBarangRequest barangDTO, Model model) {
+    public String updateBarang(@ModelAttribute UpdateBarangRequest barangDTO, Model model) {
         var barangFromDto = barangMapper.updateBarangRequestToBarang(barangDTO);
-        Barang updatedBarang = barangService.updateBarang(barangFromDto);
+        var barang = barangService.updateBarang(barangFromDto);
+
+        model.addAttribute("id", barang.getSku());
+        return "success-update-barang";
     }
 
 }
