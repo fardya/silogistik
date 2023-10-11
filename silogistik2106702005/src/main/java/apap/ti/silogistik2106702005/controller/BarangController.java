@@ -2,6 +2,7 @@ package apap.ti.silogistik2106702005.controller;
 
 import apap.ti.silogistik2106702005.dto.BarangMapper;
 import apap.ti.silogistik2106702005.dto.request.CreateBarangRequest;
+import apap.ti.silogistik2106702005.dto.request.UpdateBarangRequest;
 import apap.ti.silogistik2106702005.model.Barang;
 import apap.ti.silogistik2106702005.service.BarangService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,14 +56,16 @@ public class BarangController {
     @GetMapping("/barang/{idBarang}/ubah")
     public String formUpdateBarang(@PathVariable("idBarang") String sku, Model model) {
         var barang = barangService.getBarangBySku(sku);
+
         model.addAttribute("barang", barang);
 
         return "form-update-barang";
     }
 
     @PostMapping("/barang/ubah")
-    public void updateBarang(@ModelAttribute Barang barang, Model model) {
-        Barang updatedBarang = barangService.updateBarang(barang);
+    public void updateBarang(@ModelAttribute UpdateBarangRequest barangDTO, Model model) {
+        var barangFromDto = barangMapper.updateBarangRequestToBarang(barangDTO);
+        Barang updatedBarang = barangService.updateBarang(barangFromDto);
     }
 
 }

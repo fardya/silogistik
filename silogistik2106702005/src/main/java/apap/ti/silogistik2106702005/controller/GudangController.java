@@ -53,14 +53,16 @@ public class GudangController {
         var gudang = gudangService.getGudangById(id);
         var listBarang = barangService.getAllBarang();
         var gudangDTO = gudangMapper.gudangToUpdateGudangRequest(gudang);
+        gudangDTO.setListGudangBarang(new ArrayList<>());
 
         model.addAttribute("gudangDTO", gudangDTO);
         model.addAttribute("listBarangExisting", listBarang);
+        model.addAttribute("listGudangBarang", gudangDTO.getListGudangBarang());
 
         return "form-restock-gudang";
     }
 
-    @PostMapping(value = "/gudang/restock-barang", params = {"tambahBarang"})
+    @PostMapping(value = "/gudang/{idGudang}/restock-barang", params = {"tambahBarang"})
     public String addRowBarang(@ModelAttribute UpdateGudangRequest gudangDTO, Model model) {
         if (gudangDTO.getListGudangBarang() == null || gudangDTO.getListGudangBarang().size() == 0) {
             gudangDTO.setListGudangBarang((new ArrayList<>()));
@@ -75,10 +77,10 @@ public class GudangController {
         return "form-restock-gudang";
     }
 
-    @PostMapping("/gudang/restock-barang")
+    @PostMapping("/gudang/{idGudang}/restock-barang")
     public String restockBarang(@ModelAttribute UpdateGudangRequest gudangDTO, Model model) {
         var gudangFromDTO = gudangMapper.updateGudangRequestToGudang(gudangDTO);
-        gudangService.updateGudang(gudangFromDTO);
+        gudangBarangService.updateGudangBarang(gudangFromDTO);
 
         return "success-restock-gudang";
     }

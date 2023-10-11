@@ -56,12 +56,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="gb, iterationStatus: ${listGudangBarang}">
-                    <td scope="row" class="text-center" th:text="${iterationStatus.index + 1}"></td>
-                    <td class="text-center" th:text="${gb.barang.sku}"></td>
+                <tr th:each="gb, iterationStatus: ${gudang.listGudangBarang}">
+                    <td scope="row" class="text-center" th:text="${iterationStatus.count}"></td>
+                    <td class="text-center">
+                        <a th:href="@{/barang/{sku}(sku=${gb.barang.sku})}" th:text="${gb.barang.sku}"></a>
+                    </td>
                     <td class="text-center" th:text="${gb.barang.merk}"></td>
                     <td class="text-center" th:text="${gb.stok}"></td>
-                    <td class="text-center" th:text="${gb.barang.harga}"></td>
+                    <td class="text-center" th:text="${gb.barang.hargaBarang}"></td>
                 </tr>
                 </tbody>
             </table>

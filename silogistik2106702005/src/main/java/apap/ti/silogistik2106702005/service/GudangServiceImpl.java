@@ -36,14 +36,4 @@ public class GudangServiceImpl implements GudangService {
             return gudang.get();
         } else return null;
     }
-
-    @Override
-    public Gudang updateGudang(Gudang gudangFromDto) {
-        Gudang gudang = getGudangById(gudangFromDto.getId());
-        if (gudang != null) {
-            gudang.setListGudangBarang(gudangFromDto.getListGudangBarang());
-            gudangDb.save(gudang);
-        }
-        return gudang;
-    }
 }

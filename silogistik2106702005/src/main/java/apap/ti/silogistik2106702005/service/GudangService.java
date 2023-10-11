@@ -10,5 +10,4 @@ public interface GudangService {
     void addGudang(Gudang Gudang);
 
     Gudang getGudangById(Long id);
-    Gudang updateGudang(Gudang gudangFromDto);
 }

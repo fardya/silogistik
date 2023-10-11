@@ -6,5 +6,9 @@ import apap.ti.silogistik2106702005.model.GudangBarang;
 import java.util.List;
 
 public interface GudangBarangService {
+    void saveGudangBarang(GudangBarang gudangBarang);
+
+    void updateGudangBarang(Gudang gudangFromDTO);
+
     List<GudangBarang> getGudangBarangByGudang(Gudang gudang);
 }
