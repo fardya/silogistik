@@ -44,12 +44,11 @@ public class BarangController {
     }
 
     @PostMapping("barang/tambah")
-    public void addBarang(@ModelAttribute CreateBarangRequest barangDTO, Model model) {
-        String sku = barangService.generateSku(barangDTO.getTipeBarang());
-        barangDTO.setSku(sku);
-
+    public String addBarang(@ModelAttribute CreateBarangRequest barangDTO, Model model) {
         var barang = barangMapper.createBarangRequestToBarang(barangDTO);
         barangService.addBarang(barang);
+
+        return "success-add-barang";
     }
 
     @GetMapping("/barang/{idBarang}")

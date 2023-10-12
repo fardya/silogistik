@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -18,6 +18,6 @@ public class CreatePermintaanPengirimanRequest {
     private Date tanggalPengiriman;
     private int biayaPengiriman;
     private int jenisLayanan;
-    private LocalTime waktuPermintaan;
+    private LocalDateTime waktuPermintaan;
     private Karyawan karyawan;
 }

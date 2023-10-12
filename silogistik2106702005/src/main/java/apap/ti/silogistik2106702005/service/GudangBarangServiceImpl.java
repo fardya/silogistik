@@ -58,4 +58,10 @@ public class GudangBarangServiceImpl implements GudangBarangService {
         List<GudangBarang> listGudangBarang = gudangBarangDb.findByGudang(gudang);
         return listGudangBarang;
     }
+
+    @Override
+    public List<GudangBarang> getGudangBarangByBarang(Barang barang) {
+        List<GudangBarang> listGudangBarang = gudangBarangDb.findByBarang(barang);
+        return listGudangBarang;
+    }
 }

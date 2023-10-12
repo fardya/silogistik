@@ -8,7 +8,7 @@ import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -53,7 +53,7 @@ public class PermintaanPengiriman {
 
     @NotNull
     @Column(name = "waktu_permintaan", nullable = false)
-    private LocalTime waktuPermintaan;
+    private LocalDateTime waktuPermintaan;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_karyawan", referencedColumnName = "id")

@@ -14,6 +14,7 @@ public class CreateBarangRequest {
     private String sku;
     private int tipeBarang;
     private String merk;
+    private String merkLower;
     private Long hargaBarang;
     private List<GudangBarang> listGudangBarang;
 }

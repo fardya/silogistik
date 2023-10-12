@@ -84,4 +84,19 @@ public class GudangController {
 
         return "success-restock-gudang";
     }
+
+    @GetMapping("/gudang/cari-barang")
+    public String cariBarang(@RequestParam(value = "sku", required = false) String sku, Model model) {
+        List<Barang> listBarang = barangService.getAllBarang();
+        model.addAttribute("listBarang", listBarang);
+
+        List<GudangBarang> listGudang = new ArrayList<>();
+        if (sku != null) {
+            var barang = barangService.getBarangBySku(sku);
+            listGudang = gudangBarangService.getGudangBarangByBarang(barang);
+        }
+        model.addAttribute("listGudang", listGudang);
+
+        return "cari-barang";
+    }
 }

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    <title>Cari Barang</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.7/css/dataTables.bootstrap5.min.css">
+</head>
+
+<body>
+<nav th:replace="~{fragments/navbar :: navbar('Gudang')}"></nav>
+<div class="container">
+    <div class="text-center pt-5">
+        <h2 style="font-weight: bold;">Cari Barang</h2>
+    </div>
+    <div style="text-align: center">
+        <form action="/gudang/cari-barang" method="GET">
+            <div class="form-row align-items-center">
+                <div class="col-auto">
+                    <div class="form-group">
+                        <select name="sku" class="form-control">
+                            <option value="">Pilih Barang</option>
+                            <th:block th:each="barang: ${listBarang}">
+                                <option th:value="${barang.sku}" th:text="${barang.merk}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-md btn-primary">Cari</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <br>
+    <div class="container">
+        <div class="text-center pt-5">
+            <h2 style="font-weight: bold;">Daftar Gudang</h2>
+        </div>
+        <br>
+        <table id="example" class="table" width="100%">
+            <thead class="thead-dark">
+            <tr>
+                <th>#</th>
+                <th>Nama</th>
+                <th>Alamat Gudang</th>
+                <th>Stok</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="gb, iterationStatus: ${listGudang}">
+                <td th:text="${iterationStatus.index + 1}"></td>
+                <td th:text="${gb.gudang.nama}"></td>
+                <td th:text="${gb.gudang.alamatGudang}"></td>
+                <td th:text="${gb.stok}"></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <!-- jQuery -->
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- JS -->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#example').DataTable({
+                "paging": true,
+                "pageLength": 5, // Default jumlah item per halaman
+                "lengthMenu": [5, 10, 20], // Opsi jumlah item per halaman
+                "searching": true,
+                "info": true,
+                "columnDefs": [
+                { "orderable": false, "targets": [2, 3] } // Make action column not sortable
+                ],
+            });
+        });
+    </script>
+</body>
+</html>

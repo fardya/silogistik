@@ -10,4 +10,6 @@ public interface GudangService {
     void addGudang(Gudang Gudang);
 
     Gudang getGudangById(Long id);
+
+    List<Gudang> getGudangByBarang(String sku);
 }

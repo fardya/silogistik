@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    <title>Detail Gudang</title>
+</head>
+
+<body>
+<nav th:replace="~{fragments/navbar :: navbar('PP')}"></nav>
+<br>
+<div class="container">
+    <div class="card m-4">
+        <div class="card-header p-3 d-flex justify-content-between align-items-center">
+            <h3 class="m-0">Detail Permintaan Pengiriman</h3>
+            <div>
+                <a class="btn btn-primary" th:href="@{/permintaan-pengiriman/{id}/cancel(id=${pp.id})}">Cancel Permintaan</a>
+            </div>
+        </div>
+        <div class="card-body p-4">
+
+            <div class="row">
+                <div class="col-4">
+                    <p>No. Permintaan Pengiriman</p>
+                </div>
+                <div class="col-8">
+                    <p th:text="': ' + ${pp.nomorPengiriman}"></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4">
+                    <p>Waktu Permintaan</p>
+                </div>
+                <div class="col-8">
+                    <p th:text="': ' + ${pp.waktuPermintaan}"></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4">
+                    <p>Karyawan Bertugas</p>
+                </div>
+                <div class="col-8">
+                    <p th:text="': ' + ${barang.tipeBarang}"></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4">
+                    <p>Waktu Pengiriman</p>
+                </div>
+                <div class="col-8">
+                    <p th:text="': ' + ${totalStok}"></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4">
+                    <p>Nama Penerima</p>
+                </div>
+                <div class="col-8">
+                    <p th:text="': Rp' + ${barang.hargaBarang}"></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4">
+                    <p>Alamat Penerima</p>
+                </div>
+                <div class="col-8">
+                    <p th:text="': Rp' + ${barang.hargaBarang}"></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4">
+                    <p>Jenis Layanan</p>
+                </div>
+                <div class="col-8">
+                    <p th:text="': Rp' + ${barang.hargaBarang}"></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4">
+                    <p>Biaya Pengiriman</p>
+                </div>
+                <div class="col-8">
+                    <p th:text="': Rp' + ${barang.hargaBarang}"></p>
+                </div>
+            </div>
+
+            <br>
+            <div>
+                <p class="card-text m-0"><b>Daftar gudang</b></p>
+            </div>
+            <table class="table table-bordered mt-2">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col" class="text-center">#</th>
+                    <th scope="col" class="text-center">Nama Gudang</th>
+                    <th scope="col" class="text-center">Alamat Gudang</th>
+                    <th scope="col" class="text-center">Stok</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="gb, iterationStatus: ${barang.listGudangBarang}">
+                    <td scope="row" class="text-center" th:text="${iterationStatus.count}"></td>
+                    <td class="text-center" th:text="${gb.gudang.nama}"></td>
+                    <td class="text-center" th:text="${gb.gudang.alamatGudang}"></td>
+                    <td class="text-center" th:text="${gb.stok}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <br>
+            <div style="text-align: center;">
+                <a class="btn btn-secondary" href="/barang">Kembali</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

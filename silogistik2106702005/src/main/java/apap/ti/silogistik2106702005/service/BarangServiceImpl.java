@@ -16,11 +16,15 @@ public class BarangServiceImpl implements BarangService {
 
     @Override
     public List<Barang> getAllBarang() {
-        return barangDb.findAll();
+        return barangDb.findAllByOrderByMerkLowerAsc();
     }
 
     @Override
     public void addBarang (Barang barang) {
+        String sku = generateSku(barang.getTipeBarang());
+        barang.setSku(sku);
+        barang.setMerkLower(barang.getMerk().toLowerCase());
+
         barangDb.save(barang);
     }
 
@@ -29,19 +33,23 @@ public class BarangServiceImpl implements BarangService {
         Optional<Barang> barang = barangDb.findById(sku);
         if (barang.isPresent()) {
             return barang.get();
-        } else return null;
+        }
+        return null;
     }
 
+    @Override
     public Barang updateBarang(Barang barangFromDto) {
         Barang barang = getBarangBySku(barangFromDto.getSku());
         if (barang != null) {
             barang.setMerk(barangFromDto.getMerk());
+            barang.setMerkLower(barangFromDto.getMerk().toLowerCase());
             barang.setHargaBarang(barangFromDto.getHargaBarang());
             barangDb.save(barang);
         }
         return barang;
     }
 
+    @Override
     public String generateSku(int tipe) {
         String sku = "";
         if (tipe == 1) {
@@ -60,6 +68,7 @@ public class BarangServiceImpl implements BarangService {
         return sku;
     }
 
+    @Override
     public int countStok(Barang barang) {
         int total = 0;
         for (GudangBarang gudangBarang : barang.getListGudangBarang()) {

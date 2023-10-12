@@ -30,6 +30,9 @@ public class Barang {
     @Column(name = "merk", nullable = false)
     private String merk;
 
+    @Column(name = "merk_lower", nullable = false)
+    private String merkLower;
+
     @NotNull
     @Column(name = "harga_barang", nullable = false)
     private Long hargaBarang;
