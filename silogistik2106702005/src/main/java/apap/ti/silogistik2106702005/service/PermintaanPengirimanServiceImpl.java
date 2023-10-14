@@ -18,9 +18,9 @@ public class PermintaanPengirimanServiceImpl implements PermintaanPengirimanServ
     @Autowired
     PermintaanPengirimanDb permintaanPengirimanDb;
     @Autowired
-    PermintaanPengirimanBarangDb permintaanPengirimanBarangDb;
+    PermintaanPengirimanBarangDb permintaanBarangDb;
     @Autowired
-    PermintaanPengirimanBarangService permintaanPengirimanBarangService;
+    PermintaanPengirimanBarangService permintaanBarangService;
 
     @Override
     public List<PermintaanPengiriman> getAllPermintaanPengiriman() { return permintaanPengirimanDb.findAll(); }
@@ -34,33 +34,44 @@ public class PermintaanPengirimanServiceImpl implements PermintaanPengirimanServ
     }
 
     @Override
-    public void addPermintaanPengiriman(PermintaanPengiriman permintaan) {
-        LocalDate tanggalPengiriman = permintaan.getTanggalPengiriman();
+    public void addPermintaanPengiriman(PermintaanPengiriman permintaanFromDto) {
+        LocalDate tanggalPengiriman = permintaanFromDto.getTanggalPengiriman();
         LocalDateTime currentDateTime = LocalDateTime.now();
-        String nomor = generateNomor(countJumlahBarang(permintaan), permintaan.getJenisLayanan(), currentDateTime);
+        String nomor = generateNomor(countJumlahBarang(permintaanFromDto), permintaanFromDto.getJenisLayanan(), currentDateTime);
 
-        permintaan.setTanggalPengiriman(tanggalPengiriman);
-        permintaan.setWaktuPermintaan(currentDateTime);
-        permintaan.setIsCancelled(Boolean.FALSE);
-        permintaan.setNomorPengiriman(nomor);
+        permintaanFromDto.setTanggalPengiriman(tanggalPengiriman);
+        permintaanFromDto.setWaktuPermintaan(currentDateTime);
+        permintaanFromDto.setIsCancelled(Boolean.FALSE);
+        permintaanFromDto.setNomorPengiriman(nomor);
 
-        permintaanPengirimanDb.save(permintaan);
+        permintaanPengirimanDb.save(permintaanFromDto);
 
-        for (PermintaanPengirimanBarang permintaanPengirimanBarang : permintaan.getPermintaanPengirimanBarang()) {
-            permintaanPengirimanBarang.setPermintaanPengiriman(permintaan);
-            permintaanPengirimanBarangDb.save(permintaanPengirimanBarang);
-
-//            var permintaanExisting = permintaanPengirimanBarangService.checkIfExist(permintaan.getId(), permintaanPengirimanBarang.getBarang().getSku());
+        for (PermintaanPengirimanBarang permintaanBarangDto : permintaanFromDto.getPermintaanPengirimanBarang()) {
+            permintaanBarangDto.setPermintaanPengiriman(permintaanFromDto);
+            permintaanBarangDb.save(permintaanBarangDto);
 //
-//            if (permintaanExisting != null) {
-//                System.out.println("masuk sinii");
-//                permintaanExisting.setKuantitasPesanan(permintaanExisting.getKuantitasPesanan() + permintaanPengirimanBarang.getKuantitasPesanan());
-//                permintaanPengirimanBarangDb.save(permintaanExisting);
-//            } else {
-//                System.out.println("masukkesini");
-//                permintaanPengirimanBarangDb.save(permintaanPengirimanBarang);
+//            boolean flag = Boolean.FALSE;
+//
+//            for (PermintaanPengirimanBarang permintaanBarang : permintaanBarangService.getAllPermintaanPengirimanBarang()) {
+//                if (permintaanBarang.getBarang().getSku().equals(permintaanBarangDto.getBarang().getSku()) &&
+//                    permintaanBarang.getPermintaanPengiriman().getId().equals(permintaanBarangDto.getPermintaanPengiriman().getId())) {
+//                    int currentKuantitas = permintaanBarang.getKuantitasPesanan();
+//                    permintaanBarang.setKuantitasPesanan(currentKuantitas + permintaanBarangDto.getKuantitasPesanan());
+//                    flag = Boolean.TRUE;
+//                    permintaanBarangDb.save(permintaanBarang);
+//                    break;
+//                }
 //            }
+//
+//            if (flag == Boolean.FALSE) {
+//                permintaanBarangDto.setPermintaanPengiriman(permintaanFromDto);
+//                permintaanBarangDb.save(permintaanBarangDto);
+//            }
+
         }
+
+        permintaanFromDto.setId(permintaanFromDto.getId());
+        permintaanPengirimanDb.save(permintaanFromDto);
     }
 
     @Override

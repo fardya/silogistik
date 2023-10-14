@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +37,15 @@ public class PermintaanPengirimanController {
         model.addAttribute("listPermintaan", listPermintaan);
 
         return "viewall-permintaan";
+    }
+
+    @GetMapping("/permintaan-pengiriman/{idPermintaanPengiriman}")
+    public String detailPermintaan(@PathVariable("idPermintaanPengiriman") Long id, Model model) {
+        var permintaan = permintaanService.getPermintaanPengirimanById(id);
+        model.addAttribute("pp", permintaan);
+        model.addAttribute("jenisLayanan", "1");
+
+        return "view-permintaan";
     }
 
     @GetMapping("/permintaan-pengiriman/tambah")
@@ -67,11 +78,27 @@ public class PermintaanPengirimanController {
 
     @PostMapping("/permintaan-pengiriman/tambah")
     public String addPermintaan(@ModelAttribute CreatePermintaanPengirimanRequest permintaanDTO, Model model) {
-        var permintaan = permintaanMapper.createPermintaanPengirimanRequestToPermintaanPengiriman(permintaanDTO);
-        permintaanService.addPermintaanPengiriman(permintaan);
+        var permintaanFromDto = permintaanMapper.createPermintaanPengirimanRequestToPermintaanPengiriman(permintaanDTO);
+        permintaanService.addPermintaanPengiriman(permintaanFromDto);
 
-        model.addAttribute("id", permintaan.getId());
+        model.addAttribute("id", permintaanFromDto.getId());
 
         return "success-add-permintaan";
+    }
+
+    @GetMapping("/permintaan-pengiriman/{idPermintaanPengiriman}/cancel")
+    public String cancelPermintaan(@PathVariable("idPermintaanPengiriman") Long id, Model model) {
+        var permintaan = permintaanService.getPermintaanPengirimanById(id);
+
+        var nomorPengiriman = permintaan.getNomorPengiriman();
+        model.addAttribute("nomor", nomorPengiriman);
+
+        Duration duration = Duration.between(permintaan.getWaktuPermintaan(), LocalDateTime.now());
+        if (duration.toHours() > 24) {
+            return "fail-cancel-permintaan";
+        }
+
+        permintaanService.deletePermintaanPengiriman(permintaan);
+        return "success-cancel-permintaan";
     }
 }

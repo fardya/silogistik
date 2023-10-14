@@ -7,6 +7,8 @@ import apap.ti.silogistik2106702005.repository.PermintaanPengirimanBarangDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PermintaanPengirimanBarangServiceImpl implements PermintaanPengirimanBarangService {
     @Autowired
@@ -17,23 +19,18 @@ public class PermintaanPengirimanBarangServiceImpl implements PermintaanPengirim
         permintaanBarangDb.save(permintaanBarang);
     }
 
-//    @Override
-//    public void saveFromPermintaan(PermintaanPengiriman permintaan) {
-//
-//
-//        for (PermintaanPengirimanBarang permintaanBarang : permintaan.getPermintaanPengirimanBarang()) {
-//
-//        }
-//    }
+    @Override
+    public List<PermintaanPengirimanBarang> getAllPermintaanPengirimanBarang() {
+        return permintaanBarangDb.findAll();
+    }
 
     @Override
-    public PermintaanPengirimanBarang checkIfExist(Long idPermintaan, String skuBarang) {
-        for (PermintaanPengirimanBarang permintaanPengirimanBarang : permintaanBarangDb.findAll()) {
-            if (permintaanPengirimanBarang.getBarang().getSku().equals(skuBarang) && permintaanPengirimanBarang.getPermintaanPengiriman().getId().equals(idPermintaan)) {
-                return permintaanPengirimanBarang;
+    public PermintaanPengirimanBarang checkIfExists(Long idPermintaan, String skuBarang) {
+        for (PermintaanPengirimanBarang permintaanBarang : getAllPermintaanPengirimanBarang()) {
+            if (permintaanBarang.getBarang().getSku().equals(skuBarang) && permintaanBarang.getPermintaanPengiriman().getId().equals(idPermintaan)) {
+                return permintaanBarang;
             }
         }
-
         return null;
     }
 }

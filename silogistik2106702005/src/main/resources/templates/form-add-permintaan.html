@@ -28,7 +28,7 @@
                                 Karyawan Bertugas: <br>
                                 <select th:field="*{karyawan.id}" class="form-control">
                                     <div th:each="karyawan: ${listKaryawan}">
-                                        <option th:value="${karyawan.id}" th:text="${karyawan.nama}"></option>
+                                        <option th:value="${karyawan.id}" th:text="${karyawan.nama}" th:selected="${karyawan.id == permintaanDTO.karyawan.id}"></option>
                                     </div>
                                 </select>
                             </div>

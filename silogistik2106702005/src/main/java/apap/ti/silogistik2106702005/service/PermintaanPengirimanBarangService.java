@@ -10,7 +10,7 @@ import java.util.List;
 public interface PermintaanPengirimanBarangService {
     void savePermintaanPengirimanBarang(PermintaanPengirimanBarang permintaanBarang);
 
-//    void saveFromPermintaan(PermintaanPengiriman permintaan);
+    List<PermintaanPengirimanBarang> getAllPermintaanPengirimanBarang();
 
-    PermintaanPengirimanBarang checkIfExist(Long idPermintaan, String skuBarang);
+    PermintaanPengirimanBarang checkIfExists(Long idPermintaan, String skuBarang);
 }

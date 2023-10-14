@@ -16,7 +16,7 @@
         <div class="card-header p-3 d-flex justify-content-between align-items-center">
             <h3 class="m-0">Detail Permintaan Pengiriman</h3>
             <div>
-                <a class="btn btn-primary" th:href="@{/permintaan-pengiriman/{id}/cancel(id=${pp.id})}">Cancel Permintaan</a>
+                <a class="btn btn-danger" th:href="@{/permintaan-pengiriman/{idPermintaanPengiriman}/cancel(idPermintaanPengiriman=${pp.id})}">Cancel Permintaan</a>
             </div>
         </div>
         <div class="card-body p-4">
@@ -44,7 +44,7 @@
                     <p>Karyawan Bertugas</p>
                 </div>
                 <div class="col-8">
-                    <p th:text="': ' + ${barang.tipeBarang}"></p>
+                    <p th:text="': ' + ${pp.karyawan.nama}"></p>
                 </div>
             </div>
 
@@ -108,12 +108,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="barang, iterationStatus: ${pp.permintaanPengirimanBarang}">
+                <tr th:each="ppb, iterationStatus: ${pp.permintaanPengirimanBarang}">
                     <td scope="row" class="text-center" th:text="${iterationStatus.count}"></td>
-                    <td class="text-center" th:text="${pp.barang.sku}"></td>
-                    <td class="text-center" th:text="${pp.barang.merk}"></td>
-                    <td class="text-center" th:text="${gb.kuantitaPesanan}"></td>
-                    <td class="text-center" th:text="${harga}"></td>
+                    <td class="text-center" th:text="${ppb.barang.sku}"></td>
+                    <td class="text-center" th:text="${ppb.barang.merk}"></td>
+                    <td class="text-center" th:text="${ppb.kuantitasPesanan}"></td>
+                    <td class="text-center" th:text="${ppb.barang.hargaBarang}"></td>
                 </tr>
                 </tbody>
             </table>
