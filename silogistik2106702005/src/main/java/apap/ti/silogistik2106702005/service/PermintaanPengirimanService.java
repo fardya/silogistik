@@ -2,7 +2,7 @@ package apap.ti.silogistik2106702005.service;
 
 import apap.ti.silogistik2106702005.model.PermintaanPengiriman;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface PermintaanPengirimanService {
@@ -14,5 +14,7 @@ public interface PermintaanPengirimanService {
 
     void deletePermintaanPengiriman(PermintaanPengiriman permintaan);
 
-    String generateNomor(int jumlah, int layanan, LocalTime waktu);
+    int countJumlahBarang(PermintaanPengiriman permintaan);
+
+    String generateNomor(int jumlah, int layanan, LocalDateTime waktu);
 }

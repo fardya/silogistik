@@ -43,8 +43,6 @@ public class GudangController {
         var gudang = gudangService.getGudangById(id);
         model.addAttribute("gudang", gudang);
 
-        var listGudangBarang = gudangBarangService.getGudangBarangByGudang(gudang);
-
         return "view-gudang";
     }
 
@@ -81,6 +79,8 @@ public class GudangController {
     public String restockBarang(@ModelAttribute UpdateGudangRequest gudangDTO, Model model) {
         var gudangFromDTO = gudangMapper.updateGudangRequestToGudang(gudangDTO);
         gudangBarangService.updateGudangBarang(gudangFromDTO);
+
+        model.addAttribute("id", gudangFromDTO.getId());
 
         return "success-restock-gudang";
     }

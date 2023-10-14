@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -32,6 +33,9 @@ public class Karyawan {
     @NotNull
     @Column(name = "tanggal_lahir", nullable = false)
     private Date tanggalLahir;
+
+    @OneToMany(mappedBy = "karyawan", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<PermintaanPengiriman> listPermintaanPengiriman;
 //
 //    @Transient
 //    private int usia;

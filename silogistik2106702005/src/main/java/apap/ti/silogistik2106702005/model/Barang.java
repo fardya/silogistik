@@ -39,4 +39,7 @@ public class Barang {
 
     @OneToMany(mappedBy = "barang", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<GudangBarang> listGudangBarang;
+
+    @OneToMany(mappedBy = "barang", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    List<PermintaanPengirimanBarang> permintaanPengirimanBarang;
 }

@@ -53,7 +53,7 @@
                     <p>Waktu Pengiriman</p>
                 </div>
                 <div class="col-8">
-                    <p th:text="': ' + ${totalStok}"></p>
+                    <p th:text="': ' + ${pp.tanggalPengiriman}"></p>
                 </div>
             </div>
 
@@ -62,7 +62,7 @@
                     <p>Nama Penerima</p>
                 </div>
                 <div class="col-8">
-                    <p th:text="': Rp' + ${barang.hargaBarang}"></p>
+                    <p th:text="': ' + ${pp.namaPenerima}"></p>
                 </div>
             </div>
 
@@ -71,7 +71,7 @@
                     <p>Alamat Penerima</p>
                 </div>
                 <div class="col-8">
-                    <p th:text="': Rp' + ${barang.hargaBarang}"></p>
+                    <p th:text="': ' + ${pp.alamatPenerima}"></p>
                 </div>
             </div>
 
@@ -80,7 +80,7 @@
                     <p>Jenis Layanan</p>
                 </div>
                 <div class="col-8">
-                    <p th:text="': Rp' + ${barang.hargaBarang}"></p>
+                    <p th:text="': ' + ${jenisLayanan}"></p>
                 </div>
             </div>
 
@@ -89,29 +89,31 @@
                     <p>Biaya Pengiriman</p>
                 </div>
                 <div class="col-8">
-                    <p th:text="': Rp' + ${barang.hargaBarang}"></p>
+                    <p th:text="': Rp' + ${pp.biayaPengiriman}"></p>
                 </div>
             </div>
 
             <br>
             <div>
-                <p class="card-text m-0"><b>Daftar gudang</b></p>
+                <p class="card-text m-0"><b>Daftar barang dipesan</b></p>
             </div>
             <table class="table table-bordered mt-2">
                 <thead class="thead-dark">
                 <tr>
                     <th scope="col" class="text-center">#</th>
-                    <th scope="col" class="text-center">Nama Gudang</th>
-                    <th scope="col" class="text-center">Alamat Gudang</th>
-                    <th scope="col" class="text-center">Stok</th>
+                    <th scope="col" class="text-center">SKU</th>
+                    <th scope="col" class="text-center">Merk</th>
+                    <th scope="col" class="text-center">Kuantitas Pesanan</th>
+                    <th scope="col" class="text-center">Total Harga</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="gb, iterationStatus: ${barang.listGudangBarang}">
+                <tr th:each="barang, iterationStatus: ${pp.permintaanPengirimanBarang}">
                     <td scope="row" class="text-center" th:text="${iterationStatus.count}"></td>
-                    <td class="text-center" th:text="${gb.gudang.nama}"></td>
-                    <td class="text-center" th:text="${gb.gudang.alamatGudang}"></td>
-                    <td class="text-center" th:text="${gb.stok}"></td>
+                    <td class="text-center" th:text="${pp.barang.sku}"></td>
+                    <td class="text-center" th:text="${pp.barang.merk}"></td>
+                    <td class="text-center" th:text="${gb.kuantitaPesanan}"></td>
+                    <td class="text-center" th:text="${harga}"></td>
                 </tr>
                 </tbody>
             </table>

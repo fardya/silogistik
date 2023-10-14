@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -41,7 +42,7 @@ public class PermintaanPengiriman {
 
     @NotNull
     @Column(name = "tanggal_pengiriman", nullable = false)
-    private Date tanggalPengiriman;
+    private LocalDate tanggalPengiriman;
 
     @NotNull
     @Column(name = "biaya_pengiriman", nullable = false)
@@ -58,4 +59,7 @@ public class PermintaanPengiriman {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_karyawan", referencedColumnName = "id")
     private Karyawan karyawan;
+
+    @OneToMany(mappedBy = "permintaanPengiriman", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    List<PermintaanPengirimanBarang> permintaanPengirimanBarang;
 }
