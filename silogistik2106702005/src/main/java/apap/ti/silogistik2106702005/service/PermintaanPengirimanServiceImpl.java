@@ -20,6 +20,10 @@ import java.util.Optional;
 public class PermintaanPengirimanServiceImpl implements PermintaanPengirimanService {
     @Autowired
     PermintaanPengirimanDb permintaanPengirimanDb;
+
+    @Autowired
+    PermintaanPengirimanBarangService permintaanBarangService;
+
     @Autowired
     PermintaanPengirimanBarangDb permintaanBarangDb;
 
@@ -66,7 +70,7 @@ public class PermintaanPengirimanServiceImpl implements PermintaanPengirimanServ
 
         for (PermintaanPengirimanBarang permintaanBarangDto : permintaanNoDouble) {
             permintaanBarangDto.setPermintaanPengiriman(permintaanFromDto);
-            permintaanBarangDb.save(permintaanBarangDto);
+            permintaanBarangService.savePermintaanPengirimanBarang(permintaanBarangDto);
         }
 
         permintaanFromDto.setId(permintaanFromDto.getId());
@@ -119,8 +123,10 @@ public class PermintaanPengirimanServiceImpl implements PermintaanPengirimanServ
         LinkedHashSet<PermintaanPengiriman> setHasil = new LinkedHashSet<>();
 
         for (PermintaanPengirimanBarang i : listPermintaanBarang) {
-            var permintaan = getPermintaanPengirimanById(i.getPermintaanPengiriman().getId());
-            setHasil.add(permintaan);
+            if (i.getPermintaanPengiriman() != null) {
+                var permintaan = getPermintaanPengirimanById(i.getPermintaanPengiriman().getId());
+                setHasil.add(permintaan);
+            }
         }
 
         return (new ArrayList<>(setHasil));
