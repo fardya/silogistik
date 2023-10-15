@@ -21,7 +21,7 @@
                 <br>
                 <form th:action="@{/barang/tambah}" th:object="${barangDTO}" method="POST">
                     Merk Barang: <br>
-                    <input class="form-control" type="text" th:field="*{merk}" />
+                    <input class="form-control" type="text" th:field="*{merk}" required/>
                     <br><br>
 
                     Tipe Barang: <br>

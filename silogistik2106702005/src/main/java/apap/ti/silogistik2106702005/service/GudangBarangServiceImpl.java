@@ -35,7 +35,7 @@ public class GudangBarangServiceImpl implements GudangBarangService {
             boolean flag = Boolean.FALSE;
             for (GudangBarang gudangBarang : gudang.getListGudangBarang()) {
                 if (gudangBarangDto.getBarang().getSku().equals(gudangBarang.getBarang().getSku())) {
-                    int currentStok = gudangBarang.getStok(); //sku sama
+                    int currentStok = gudangBarang.getStok();
                     gudangBarang.setStok(currentStok + gudangBarangDto.getStok());
                     flag = Boolean.TRUE;
                     gudangBarangDb.save(gudangBarang);

@@ -7,9 +7,12 @@ import apap.ti.silogistik2106702005.model.PermintaanPengirimanBarang;
 import apap.ti.silogistik2106702005.service.BarangService;
 import apap.ti.silogistik2106702005.service.KaryawanService;
 import apap.ti.silogistik2106702005.service.PermintaanPengirimanService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
@@ -77,7 +80,22 @@ public class PermintaanPengirimanController {
     }
 
     @PostMapping("/permintaan-pengiriman/tambah")
-    public String addPermintaan(@ModelAttribute CreatePermintaanPengirimanRequest permintaanDTO, Model model) {
+    public String addPermintaan(@Valid @ModelAttribute CreatePermintaanPengirimanRequest permintaanDTO,
+                                BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            List<ObjectError> errors = bindingResult.getAllErrors();
+
+            String errorMessage = "";
+            for (ObjectError error : errors) {
+                errorMessage += error.getDefaultMessage() + ", ";
+            }
+            model.addAttribute("errorMessage", errorMessage.substring(0, errorMessage.length()-2));
+
+            return "error-view-permintaan";
+        }
+
+
         var permintaanFromDto = permintaanMapper.createPermintaanPengirimanRequestToPermintaanPengiriman(permintaanDTO);
         permintaanService.addPermintaanPengiriman(permintaanFromDto);
 

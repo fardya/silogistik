@@ -5,6 +5,7 @@ import apap.ti.silogistik2106702005.dto.request.CreateBarangRequest;
 import apap.ti.silogistik2106702005.dto.request.UpdateBarangRequest;
 import apap.ti.silogistik2106702005.model.Barang;
 import apap.ti.silogistik2106702005.service.BarangService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,7 +45,21 @@ public class BarangController {
     }
 
     @PostMapping("barang/tambah")
-    public String addBarang(@ModelAttribute CreateBarangRequest barangDTO, Model model) {
+    public String addBarang(@Valid @ModelAttribute CreateBarangRequest barangDTO,
+                            BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            List<ObjectError> errors = bindingResult.getAllErrors();
+
+            String errorMessage = "";
+            for (ObjectError error : errors) {
+                errorMessage += error.getDefaultMessage() + ", ";
+            }
+            model.addAttribute("errorMessage", errorMessage.substring(0, errorMessage.length()-2));
+
+            return "error-view-barang";
+        }
+
         var barang = barangMapper.createBarangRequestToBarang(barangDTO);
         barangService.addBarang(barang);
 
