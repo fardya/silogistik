@@ -2,6 +2,7 @@ package apap.ti.silogistik2106702005.controller;
 
 import apap.ti.silogistik2106702005.dto.PermintaanPengirimanMapper;
 import apap.ti.silogistik2106702005.dto.request.CreatePermintaanPengirimanRequest;
+import apap.ti.silogistik2106702005.dto.response.PermintaanPengirimanResponse;
 import apap.ti.silogistik2106702005.model.PermintaanPengiriman;
 import apap.ti.silogistik2106702005.model.PermintaanPengirimanBarang;
 import apap.ti.silogistik2106702005.service.BarangService;
@@ -16,7 +17,9 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +40,12 @@ public class PermintaanPengirimanController {
     @GetMapping("/permintaan-pengiriman")
     public String listPermintaan(Model model) {
         List<PermintaanPengiriman> listPermintaan = permintaanService.getAllPermintaanPengiriman();
-        model.addAttribute("listPermintaan", listPermintaan);
+
+        List<PermintaanPengirimanResponse> listPermintaanDTO = new ArrayList<>();
+        for (PermintaanPengiriman permintaan : listPermintaan) {
+            listPermintaanDTO.add(permintaanMapper.permintaanToPermintaanPengirimanResponse(permintaan));
+        }
+        model.addAttribute("listPermintaan", listPermintaanDTO);
 
         return "viewall-permintaan";
     }
@@ -101,7 +109,7 @@ public class PermintaanPengirimanController {
         var permintaanFromDto = permintaanMapper.createPermintaanPengirimanRequestToPermintaanPengiriman(permintaanDTO);
         permintaanService.addPermintaanPengiriman(permintaanFromDto);
 
-        model.addAttribute("id", permintaanFromDto.getId());
+        model.addAttribute("nomor", permintaanFromDto.getNomorPengiriman());
 
         return "success-add-permintaan";
     }
@@ -115,10 +123,41 @@ public class PermintaanPengirimanController {
 
         Duration duration = Duration.between(permintaan.getWaktuPermintaan(), LocalDateTime.now());
         if (duration.toHours() > 24) {
+            model.addAttribute("id", permintaan.getId());
             return "fail-cancel-permintaan";
         }
 
         permintaanService.deletePermintaanPengiriman(permintaan);
         return "success-cancel-permintaan";
+    }
+
+    @GetMapping("/filter-permintaan-pengiriman")
+    public String filterPermintaan(
+            @RequestParam(value = "start-date", required = false) LocalDate startDate,
+            @RequestParam(value = "end-date", required = false) LocalDate endDate,
+            @RequestParam(value = "sku", required = false) String sku,
+            Model model
+    ) {
+        var listBarang = barangService.getAllBarang();
+        model.addAttribute("listBarang", listBarang);
+
+        if (startDate != null && endDate != null && sku != null) {
+            var barang = barangService.getBarangBySku(sku);
+            var list1 = permintaanService.filterByWaktuPermintaan(
+                    startDate.atStartOfDay(), endDate.atTime(LocalTime.MAX));
+            var list2 = permintaanService.getPermintaanByBarang(barang);
+
+            List<PermintaanPengirimanResponse> filteredPermintaan = new ArrayList<>();
+            for (PermintaanPengiriman permintaan : list1) {
+                if (list2.contains(permintaan)) {
+                    var permintaanDTO = permintaanMapper.permintaanToPermintaanPengirimanResponse(permintaan);
+                    filteredPermintaan.add(permintaanDTO);
+                }
+            }
+
+            model.addAttribute("listPermintaan", filteredPermintaan);
+        }
+
+        return "filter-permintaan";
     }
 }

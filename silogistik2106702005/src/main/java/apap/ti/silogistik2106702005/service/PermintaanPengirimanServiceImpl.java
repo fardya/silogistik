@@ -1,5 +1,6 @@
 package apap.ti.silogistik2106702005.service;
 
+import apap.ti.silogistik2106702005.model.Barang;
 import apap.ti.silogistik2106702005.model.PermintaanPengiriman;
 import apap.ti.silogistik2106702005.model.PermintaanPengirimanBarang;
 import apap.ti.silogistik2106702005.repository.PermintaanPengirimanBarangDb;
@@ -9,7 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,11 +21,9 @@ public class PermintaanPengirimanServiceImpl implements PermintaanPengirimanServ
     PermintaanPengirimanDb permintaanPengirimanDb;
     @Autowired
     PermintaanPengirimanBarangDb permintaanBarangDb;
-    @Autowired
-    PermintaanPengirimanBarangService permintaanBarangService;
 
     @Override
-    public List<PermintaanPengiriman> getAllPermintaanPengiriman() { return permintaanPengirimanDb.findAll(); }
+    public List<PermintaanPengiriman> getAllPermintaanPengiriman() { return permintaanPengirimanDb.findAllByOrderByWaktuPermintaanDesc(); }
 
     @Override
     public PermintaanPengiriman getPermintaanPengirimanById(Long id) {
@@ -107,5 +107,23 @@ public class PermintaanPengirimanServiceImpl implements PermintaanPengirimanServ
         nomor += waktu.toString().substring(11, 19);
 
         return nomor;
+    }
+
+    @Override
+    public List<PermintaanPengiriman> filterByWaktuPermintaan(LocalDateTime startDate, LocalDateTime endDate) {
+        return permintaanPengirimanDb.findAllByWaktuPermintaanBetweenOrderByWaktuPermintaanDesc(startDate, endDate);
+    }
+
+    @Override
+    public List<PermintaanPengiriman> getPermintaanByBarang(Barang barang) {
+        var listPermintaanBarang = permintaanBarangDb.findByBarang(barang);
+        LinkedHashSet<PermintaanPengiriman> setHasil = new LinkedHashSet<>();
+
+        for (PermintaanPengirimanBarang i : listPermintaanBarang) {
+            var permintaan = getPermintaanPengirimanById(i.getPermintaanPengiriman().getId());
+            setHasil.add(permintaan);
+        }
+
+        return (new ArrayList<>(setHasil));
     }
 }

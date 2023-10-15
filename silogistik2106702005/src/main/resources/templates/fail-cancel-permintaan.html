@@ -1,10 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    <title>Cancel Permintaan</title>
 </head>
-<body>
 
+<body>
+<nav th:replace="~{fragments/navbar :: navbar('PP')}"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="text-center">
+                <h5 th:text="'Permintaan pengiriman dengan nomor pengiriman ' + ${nomor} +
+                ' tidak dapat dibatalkan karena sudah lebih dari 24 jam.'" style="color: black;"></h5>
+            </div>
+            <div class="text-center m-3">
+                <a type="button" class="btn btn-md btn-primary" href="/">Beranda</a>
+                <a type="button" class="btn btn-md btn-primary" th:href="@{/permintaan-pengiriman/{id}(id=${id})}">Detail Permintaan Pengiriman</a>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
+
 </html>

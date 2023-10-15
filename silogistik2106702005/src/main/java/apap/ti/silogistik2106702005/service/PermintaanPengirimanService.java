@@ -1,5 +1,6 @@
 package apap.ti.silogistik2106702005.service;
 
+import apap.ti.silogistik2106702005.model.Barang;
 import apap.ti.silogistik2106702005.model.PermintaanPengiriman;
 
 import java.time.LocalDateTime;
@@ -17,4 +18,8 @@ public interface PermintaanPengirimanService {
     int countJumlahBarang(PermintaanPengiriman permintaan);
 
     String generateNomor(int jumlah, int layanan, LocalDateTime waktu);
+
+    List<PermintaanPengiriman> filterByWaktuPermintaan(LocalDateTime startDate, LocalDateTime endDate);
+
+    List<PermintaanPengiriman> getPermintaanByBarang(Barang barang);
 }

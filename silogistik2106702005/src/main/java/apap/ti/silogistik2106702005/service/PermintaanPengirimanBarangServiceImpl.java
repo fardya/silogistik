@@ -24,6 +24,11 @@ public class PermintaanPengirimanBarangServiceImpl implements PermintaanPengirim
         return permintaanBarangDb.findAll();
     }
 
+//    @Override
+//    public List<PermintaanPengirimanBarang> getPermintaanPengirimanBarangByBarang(Barang barang) {
+//        return permintaanBarangDb.findByBarang(barang);
+//    }
+
     @Override
     public PermintaanPengirimanBarang checkIfExists(Long idPermintaan, String skuBarang) {
         for (PermintaanPengirimanBarang permintaanBarang : getAllPermintaanPengirimanBarang()) {

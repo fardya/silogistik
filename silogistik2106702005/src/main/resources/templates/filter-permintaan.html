@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8" />
+  <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+  <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+  <title>Filter Permintaan Pengiriman</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.7/css/dataTables.bootstrap5.min.css">
+</head>
+
+<body>
+<nav th:replace="~{fragments/navbar :: navbar('Bonus')}"></nav>
+<div class="container">
+  <div class="text-center pt-5">
+    <h2 style="font-weight: bold;">Filter Permintaan Pengiriman</h2>
+  </div>
+  <br>
+  <form th:action="@{/filter-permintaan-pengiriman}" method="GET">
+    <div class="form-group text-center">
+      <div class="input-group mx-auto" style="width: 700px;">
+        <select name="sku" class="form-control form-select">
+          <option value="">Pilih Barang</option>
+          <th:block th:each="barang: ${listBarang}">
+            <option th:value="${barang.sku}" th:text="${barang.merk}"></option>
+          </th:block>
+        </select>
+      </div>
+      <br>
+      <div class="input-group mx-auto" style="width: 700px;">
+        <input type="date" name="start-date" class="form-control">
+        <div class="text-center m-2">hingga</div>
+        <input type="date" name="end-date" class="form-control">
+      </div>
+      <br>
+      <button class="btn btn-primary" type="submit">Cari</button>
+    </div>
+  </form>
+
+  <br>
+  <div class="container">
+    <table id="example" class="table" width="100%">
+      <thead class="thead-dark">
+      <tr>
+        <th>#</th>
+        <th>Waktu Permintaan</th>
+        <th>Nomor Pengiriman</th>
+        <th>Nama Penerima</th>
+        <th>Alamat Penerima</th>
+        <th>Tanggal Pengiriman</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="p, iterationStatus: ${listPermintaan}">
+        <td th:text="${iterationStatus.count}"></td>
+        <td th:text="${p.waktuPermintaan}"></td>
+        <td th:text="${p.nomorPengiriman}"></td>
+        <td th:text="${p.namaPenerima}"></td>
+        <td th:text="${p.alamatPenerima}"></td>
+        <td th:text="${p.tanggalPengiriman}"></td>
+        <td></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+<!-- jQuery -->
+<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- JS -->
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            $('#example').DataTable({
+                "paging": true,
+                "pageLength": 5, // Default jumlah item per halaman
+                "lengthMenu": [5, 10, 20], // Opsi jumlah item per halaman
+                "searching": true,
+                "info": true,
+                "language": {
+                "emptyTable": "Tidak ada permintaan dengan kategori tersebut"
+                },
+                "columnDefs": [
+                { "orderable": false, "targets": [0, 2, 4] } // Make action column not sortable
+                ],
+            });
+        });
+</script>
+<style>
+    #example td {
+        text-align: center;
+    }
+    #example th {
+        text-align: center;
+    }
+</style>
+</body>
+</html>
