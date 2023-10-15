@@ -11,8 +11,4 @@ public interface PermintaanPengirimanBarangService {
     void savePermintaanPengirimanBarang(PermintaanPengirimanBarang permintaanBarang);
 
     List<PermintaanPengirimanBarang> getAllPermintaanPengirimanBarang();
-
-//    List<PermintaanPengirimanBarang> getPermintaanPengirimanBarangByBarang(Barang barang);
-
-    PermintaanPengirimanBarang checkIfExists(Long idPermintaan, String skuBarang);
 }

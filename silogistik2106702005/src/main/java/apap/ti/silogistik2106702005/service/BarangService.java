@@ -16,4 +16,8 @@ public interface BarangService {
     String generateSku(int tipe);
 
     int countStok(Barang barang);
+
+    boolean merkExists(String merk);
+
+    boolean merkExists(String merk, String sku);
 }

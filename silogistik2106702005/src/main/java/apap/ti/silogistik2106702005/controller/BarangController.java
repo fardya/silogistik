@@ -60,6 +60,13 @@ public class BarangController {
             return "error-view-barang";
         }
 
+        if (barangService.merkExists(barangDTO.getMerk())) {
+            String errorMessage = "Barang dengan merk yang sama sudah terdaftar";
+            model.addAttribute("errorMessage", errorMessage);
+
+            return "error-view-barang";
+        }
+
         var barang = barangMapper.createBarangRequestToBarang(barangDTO);
         barangService.addBarang(barang);
 
@@ -91,6 +98,13 @@ public class BarangController {
 
     @PostMapping("/barang/ubah")
     public String updateBarang(@ModelAttribute UpdateBarangRequest barangDTO, Model model) {
+        if (barangService.merkExists(barangDTO.getMerk(), barangDTO.getSku())) {
+            String errorMessage = "Barang dengan merk yang sama sudah terdaftar";
+            model.addAttribute("errorMessage", errorMessage);
+
+            return "error-view-barang";
+        }
+
         var barangFromDto = barangMapper.updateBarangRequestToBarang(barangDTO);
         var barang = barangService.updateBarang(barangFromDto);
 

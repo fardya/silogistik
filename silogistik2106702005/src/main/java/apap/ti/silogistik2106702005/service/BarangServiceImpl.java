@@ -76,4 +76,14 @@ public class BarangServiceImpl implements BarangService {
         }
         return total;
     }
+
+    @Override
+    public boolean merkExists(String merk) {
+        return getAllBarang().stream().anyMatch(b -> b.getMerk().equals(merk));
+    }
+
+    @Override
+    public boolean merkExists(String merk, String sku) {
+        return getAllBarang().stream().anyMatch(b -> b.getMerk().equals(merk) && !b.getSku().equals(sku));
+    }
 }

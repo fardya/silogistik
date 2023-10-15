@@ -82,7 +82,9 @@
                 <tbody>
                 <tr th:each="gb, iterationStatus: ${barang.listGudangBarang}">
                     <td scope="row" class="text-center" th:text="${iterationStatus.count}"></td>
-                    <td class="text-center" th:text="${gb.gudang.nama}"></td>
+                    <td class="text-center">
+                        <a th:href="@{/gudang/{id}(id=${gb.gudang.id})}" th:text="${gb.gudang.nama}"></a>
+                    </td>
                     <td class="text-center" th:text="${gb.gudang.alamatGudang}"></td>
                     <td class="text-center" th:text="${gb.stok}"></td>
                 </tr>

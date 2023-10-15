@@ -32,11 +32,21 @@ public class GudangBarangServiceImpl implements GudangBarangService {
         var gudang = gudangService.getGudangById(gudangFromDto.getId());
 
         for (GudangBarang gudangBarangDto : gudangFromDto.getListGudangBarang()) {
+            for (GudangBarang gudangBarang : gudang.getListGudangBarang()) {
+                if (gudangBarangDto.getBarang().getSku().equals(gudangBarang.getBarang().getSku())) {
+                    gudangBarang.setStok(0);
+                    break;
+                }
+            }
+        }
+
+        for (GudangBarang gudangBarangDto : gudangFromDto.getListGudangBarang()) {
             boolean flag = Boolean.FALSE;
             for (GudangBarang gudangBarang : gudang.getListGudangBarang()) {
                 if (gudangBarangDto.getBarang().getSku().equals(gudangBarang.getBarang().getSku())) {
-                    int currentStok = gudangBarang.getStok();
-                    gudangBarang.setStok(currentStok + gudangBarangDto.getStok());
+                     int currentStok = gudangBarang.getStok();
+                     gudangBarang.setStok(currentStok + gudangBarangDto.getStok());
+                    // gudangBarang.setStok(gudangBarangDto.getStok());
                     flag = Boolean.TRUE;
                     gudangBarangDb.save(gudangBarang);
                     break;

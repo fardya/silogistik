@@ -5,6 +5,7 @@ import apap.ti.silogistik2106702005.model.PermintaanPengiriman;
 import apap.ti.silogistik2106702005.model.PermintaanPengirimanBarang;
 import apap.ti.silogistik2106702005.repository.PermintaanPengirimanBarangDb;
 import apap.ti.silogistik2106702005.repository.PermintaanPengirimanDb;
+import com.github.javafaker.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,28 +47,26 @@ public class PermintaanPengirimanServiceImpl implements PermintaanPengirimanServ
 
         permintaanPengirimanDb.save(permintaanFromDto);
 
+        List<PermintaanPengirimanBarang> permintaanNoDouble = new ArrayList<>();
+
         for (PermintaanPengirimanBarang permintaanBarangDto : permintaanFromDto.getPermintaanPengirimanBarang()) {
+            boolean flag = Boolean.FALSE;
+            for (PermintaanPengirimanBarang permintaanExisting : permintaanNoDouble) {
+                if (permintaanExisting.getBarang().getSku().equals(permintaanBarangDto.getBarang().getSku())) {
+                    int currentKuantitas = permintaanExisting.getKuantitasPesanan();
+                    permintaanExisting.setKuantitasPesanan(currentKuantitas + permintaanBarangDto.getKuantitasPesanan());
+                    flag = Boolean.TRUE;
+                    break;
+                }
+            }
+            if (flag == Boolean.FALSE) {
+                permintaanNoDouble.add(permintaanBarangDto);
+            }
+        }
+
+        for (PermintaanPengirimanBarang permintaanBarangDto : permintaanNoDouble) {
             permintaanBarangDto.setPermintaanPengiriman(permintaanFromDto);
             permintaanBarangDb.save(permintaanBarangDto);
-//
-//            boolean flag = Boolean.FALSE;
-//
-//            for (PermintaanPengirimanBarang permintaanBarang : permintaanBarangService.getAllPermintaanPengirimanBarang()) {
-//                if (permintaanBarang.getBarang().getSku().equals(permintaanBarangDto.getBarang().getSku()) &&
-//                    permintaanBarang.getPermintaanPengiriman().getId().equals(permintaanBarangDto.getPermintaanPengiriman().getId())) {
-//                    int currentKuantitas = permintaanBarang.getKuantitasPesanan();
-//                    permintaanBarang.setKuantitasPesanan(currentKuantitas + permintaanBarangDto.getKuantitasPesanan());
-//                    flag = Boolean.TRUE;
-//                    permintaanBarangDb.save(permintaanBarang);
-//                    break;
-//                }
-//            }
-//
-//            if (flag == Boolean.FALSE) {
-//                permintaanBarangDto.setPermintaanPengiriman(permintaanFromDto);
-//                permintaanBarangDb.save(permintaanBarangDto);
-//            }
-
         }
 
         permintaanFromDto.setId(permintaanFromDto.getId());

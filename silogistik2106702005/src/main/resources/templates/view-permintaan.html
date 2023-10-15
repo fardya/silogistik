@@ -111,11 +111,11 @@
                 <tr th:each="ppb, iterationStatus: ${pp.permintaanPengirimanBarang}">
                     <td scope="row" class="text-center" th:text="${iterationStatus.count}"></td>
                     <td class="text-center">
-                        <a th:href="@{/barang/{sku}(sku=${ppb.barang.sku})}" th:text="${ppb.barang.sku}">
+                        <a th:href="@{/barang/{sku}(sku=${ppb.barang.sku})}" th:text="${ppb.barang.sku}"></a>
                     </td>
                     <td class="text-center" th:text="${ppb.barang.merk}"></td>
                     <td class="text-center" th:text="${ppb.kuantitasPesanan}"></td>
-                    <td class="text-center" th:text="${ppb.kuantitasPesanan * ppb.barang.hargaBarang}"></td>
+                    <td class="text-center" th:text="'Rp' + ${ppb.kuantitasPesanan * ppb.barang.hargaBarang}"></td>
                 </tr>
                 </tbody>
             </table>
