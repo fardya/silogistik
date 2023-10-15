@@ -1,10 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    <title>Restock Gudang</title>
 </head>
-<body>
 
+<body>
+<nav th:replace="~{fragments/navbar :: navbar('Gudang')}"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div style="text-align: center;">
+                <a href="https://imgbb.com/"><img src="https://i.ibb.co/pZR7gGg/check-mark-4225683.png" alt="check-mark" width="75"
+                                                  height="75"/></a>
+            </div>
+            <br>
+            <div class="text-center">
+                <h5 th:text="'Berhasil menambah stok untuk gudang dengan Id ' + ${id} +
+                '.'" style="color: black;"></h5>
+            </div>
+            <br>
+            <div class="text-center m-3">
+                <a type="button" class="btn btn-md btn-primary" href="/">Beranda</a>
+                <a type="button" class="btn btn-md btn-primary" href="/gudang">Daftar Gudang</a>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
+
 </html>

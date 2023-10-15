@@ -34,13 +34,13 @@
                             </div>
                             <div class="col">
                                 Tanggal Pengiriman: <br>
-                                <input class="form-control" type="date" th:field="*{tanggalPengiriman}"/>
+                                <input class="form-control" type="date" th:field="*{tanggalPengiriman}" required/>
                             </div>
                         </td>
                         <td class="row">
                             <div class="col">
                                 Nama Penerima: <br>
-                                <input class="form-control" type="text" th:field="*{namaPenerima}"/>
+                                <input class="form-control" type="text" th:field="*{namaPenerima}" required/>
                             </div>
                             <div class="col">
                                 Jenis Layanan: <br>
@@ -55,11 +55,11 @@
                         <td class="row">
                             <div class="col">
                                 Alamat Penerima: <br>
-                                <input class="form-control" type="text" th:field="*{alamatPenerima}"/>
+                                <input class="form-control" type="text" th:field="*{alamatPenerima}" required/>
                             </div>
                             <div class="col">
                                 Biaya Pengiriman: <br>
-                                <input class="form-control" type="number" th:field="*{biayaPengiriman}"/>
+                                <input class="form-control" type="number" th:field="*{biayaPengiriman}" min="1" required/>
                             </div>
                         </td>
                     </tr>
@@ -83,12 +83,12 @@
                     <tr th:each="pb, iterationStatus: *{permintaanPengirimanBarang}">
                         <td th:text="${iterationStatus.count}"></td>
                         <td>
-                            <select th:field="*{permintaanPengirimanBarang[__${iterationStatus.index}__].barang.sku}" class="form-control">
+                            <select th:field="*{permintaanPengirimanBarang[__${iterationStatus.index}__].barang.sku}" class="form-control" required>
                                 <option th:each="barang: ${listBarang}" th:value="${barang.sku}" th:text="${barang.merk}"></option>
                             </select>
                         </td>
                         <td>
-                            <input class="form-control" type="number" th:field="*{permintaanPengirimanBarang[__${iterationStatus.index}__].kuantitasPesanan}">
+                            <input class="form-control" type="number" th:field="*{permintaanPengirimanBarang[__${iterationStatus.index}__].kuantitasPesanan}" min="1">
                         </td>
 
                     </tr>

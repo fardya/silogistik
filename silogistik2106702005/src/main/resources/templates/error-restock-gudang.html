@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8" />
+  <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+  <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+  <title>Restock Gudang</title>
+</head>
+
+<body>
+<nav th:replace="~{fragments/navbar :: navbar('Gudang')}"></nav>
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div style="text-align: center;">
+        <a href="https://imgbb.com/"><img src="https://i.ibb.co/tMH58tf/cross-mark-4225690.png" alt="cross-mark-4225690" width="75"
+                                          height="75"/></a>
+      </div>
+      <div class="text-center">
+        <h5 th:text="'Gagal melakukan restock barang pada gudang dengan Id ' + ${id} + '.'"></h5>
+      </div>
+      <div class="text-center m-3">
+        <a type="button" class="btn btn-md btn-primary" href="/">Beranda</a>
+        <a type="button" class="btn btn-md btn-primary" href="/gudang">Daftar Gudang</a>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+
+</html>

@@ -77,6 +77,10 @@ public class GudangController {
 
     @PostMapping("/gudang/{idGudang}/restock-barang")
     public String restockBarang(@ModelAttribute UpdateGudangRequest gudangDTO, Model model) {
+        if (gudangDTO.getListGudangBarang() == null) {
+            model.addAttribute("id", gudangDTO.getId());
+            return "error-restock-gudang";
+        }
         var gudangFromDTO = gudangMapper.updateGudangRequestToGudang(gudangDTO);
         gudangBarangService.updateGudangBarang(gudangFromDTO);
 

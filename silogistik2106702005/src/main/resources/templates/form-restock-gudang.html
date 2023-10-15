@@ -59,12 +59,12 @@
               <td th:text="${iterationStatus.count}"></td>
               <input class="form-control" type="hidden" th:field="*{listGudangBarang[__${iterationStatus.index}__].id}"/>
               <td>
-                  <select th:field="*{listGudangBarang[__${iterationStatus.index}__].barang.sku}" class="form-control">
+                  <select th:field="*{listGudangBarang[__${iterationStatus.index}__].barang.sku}" class="form-control" required>
                       <option th:each="barang: ${listBarangExisting}" th:value="${barang.sku}" th:text="${barang.merk}"></option>
                   </select>
               </td>
               <td>
-                  <input class="form-control" type="number" th:field="*{listGudangBarang[__${iterationStatus.index}__].stok}">
+                  <input required class="form-control" type="number" th:field="*{listGudangBarang[__${iterationStatus.index}__].stok}" min="1">
               </td>
 
             </tr>

@@ -105,6 +105,12 @@ public class PermintaanPengirimanController {
             return "error-view-permintaan";
         }
 
+        if (permintaanDTO.getTanggalPengiriman().isBefore(LocalDate.now())) {
+            String errorMessage = "Tidak dapat memilih tanggal yang telah berlalu untuk pengiriman";
+            model.addAttribute("errorMessage", errorMessage);
+
+            return "error-view-permintaan";
+        }
 
         var permintaanFromDto = permintaanMapper.createPermintaanPengirimanRequestToPermintaanPengiriman(permintaanDTO);
         permintaanService.addPermintaanPengiriman(permintaanFromDto);
