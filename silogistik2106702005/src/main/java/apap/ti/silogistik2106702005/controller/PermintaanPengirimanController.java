@@ -45,8 +45,10 @@ public class PermintaanPengirimanController {
     @GetMapping("/permintaan-pengiriman/{idPermintaanPengiriman}")
     public String detailPermintaan(@PathVariable("idPermintaanPengiriman") Long id, Model model) {
         var permintaan = permintaanService.getPermintaanPengirimanById(id);
-        model.addAttribute("pp", permintaan);
-        model.addAttribute("jenisLayanan", "1");
+
+        var permintaanDTO = permintaanMapper.permintaanToPermintaanPengirimanResponse(permintaan);
+
+        model.addAttribute("pp", permintaanDTO);
 
         return "view-permintaan";
     }

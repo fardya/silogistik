@@ -44,13 +44,13 @@
                     <p>Karyawan Bertugas</p>
                 </div>
                 <div class="col-8">
-                    <p th:text="': ' + ${pp.karyawan.nama}"></p>
+                    <p th:text="': ' + ${pp.namaKaryawan}"></p>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-4">
-                    <p>Waktu Pengiriman</p>
+                    <p>Tanggal Pengiriman</p>
                 </div>
                 <div class="col-8">
                     <p th:text="': ' + ${pp.tanggalPengiriman}"></p>
@@ -80,7 +80,7 @@
                     <p>Jenis Layanan</p>
                 </div>
                 <div class="col-8">
-                    <p th:text="': ' + ${jenisLayanan}"></p>
+                    <p th:text="': ' + ${pp.jenisLayanan}"></p>
                 </div>
             </div>
 
@@ -110,10 +110,12 @@
                 <tbody>
                 <tr th:each="ppb, iterationStatus: ${pp.permintaanPengirimanBarang}">
                     <td scope="row" class="text-center" th:text="${iterationStatus.count}"></td>
-                    <td class="text-center" th:text="${ppb.barang.sku}"></td>
+                    <td class="text-center">
+                        <a th:href="@{/barang/{sku}(sku=${ppb.barang.sku})}" th:text="${ppb.barang.sku}">
+                    </td>
                     <td class="text-center" th:text="${ppb.barang.merk}"></td>
                     <td class="text-center" th:text="${ppb.kuantitasPesanan}"></td>
-                    <td class="text-center" th:text="${ppb.barang.hargaBarang}"></td>
+                    <td class="text-center" th:text="${ppb.kuantitasPesanan * ppb.barang.hargaBarang}"></td>
                 </tr>
                 </tbody>
             </table>
