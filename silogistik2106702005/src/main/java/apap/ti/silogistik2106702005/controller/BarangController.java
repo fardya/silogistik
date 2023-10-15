@@ -63,6 +63,8 @@ public class BarangController {
         var barang = barangMapper.createBarangRequestToBarang(barangDTO);
         barangService.addBarang(barang);
 
+        model.addAttribute("sku", barang.getSku());
+
         return "success-add-barang";
     }
 
@@ -92,7 +94,8 @@ public class BarangController {
         var barangFromDto = barangMapper.updateBarangRequestToBarang(barangDTO);
         var barang = barangService.updateBarang(barangFromDto);
 
-        model.addAttribute("id", barang.getSku());
+        model.addAttribute("sku", barang.getSku());
+
         return "success-update-barang";
     }
 

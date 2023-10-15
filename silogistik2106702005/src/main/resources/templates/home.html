@@ -10,13 +10,57 @@
 </head>
 
 <body>
-<div class="container text-center">
-  <div class="row pt-5 pb-2">
-    <h1>
-      SILOGISTIK
-    </h1>
+  <nav th:replace="~{fragments/navbar :: navbar('Beranda')}"></nav>
+  <br><br>
+  <div class="container text-center">
+    <div style="text-align: center;">
+      <img src="https://i.ibb.co/CWvrjCc/logistics-4363531.png" alt="logistics-4363531" width="150"
+           height="150"/>
+    </div>
+    <div class="row pt-3 pb-2">
+      <h1>
+        SILOGISTIK
+      </h1>
+    </div>
   </div>
-</div>
-</body>
 
+  <br>
+  <div class="d-flex justify-content-center">
+    <a href="/gudang">
+      <div class="card bg-primary text-white" style="width: 15rem; height: 8.5rem; margin: 10px;">
+        <div class="card-body text-center" style="padding: 10px;">
+          <p class="card-text" style="margin-bottom: 5px;">Gudang</p>
+          <p th:text="${gudang}" style="font-weight: bold; font-size: 2rem; margin: 0;"></p>
+          <p class="card-text" style="margin-top: 5px;">gudang</p>
+        </div>
+      </div>
+    </a>
+    <a href="/barang">
+      <div class="card bg-primary text-white" style="width: 15rem; height: 8.5rem; margin: 10px;">
+        <div class="card-body text-center" style="padding: 10px;">
+        <p class="card-text" style="margin-bottom: 5px;">Barang</p>
+        <p th:text="${barang}" style="font-weight: bold; font-size: 2rem; margin: 0;"></p>
+        <p class="card-text" style="margin-top: 5px;">barang</p>
+      </div>
+  </div>
+  </a>
+  <a href="/permintaan-pengiriman">
+    <div class="card bg-primary text-white" style="width: 15rem; height: 8.5rem; margin: 10px;">
+      <div class="card-body text-center" style="padding: 10px;">
+        <p class="card-text" style="margin-bottom: 5px;">Permintaan Pengiriman</p>
+        <p th:text="${permintaan}" style="font-weight: bold; font-size: 2rem; margin: 0;"></p>
+        <p class="card-text" style="margin-top: 5px;">permintaan pengiriman</p>
+      </div>
+    </div>
+  </a>
+    <div class="card bg-primary text-white" style="width: 15rem; height: 8.5rem; margin: 10px;">
+      <div class="card-body text-center" style="padding: 10px;">
+        <p class="card-text" style="margin-bottom: 5px;">Karyawan</p>
+        <p th:text="${karyawan}" style="font-weight: bold; font-size: 2rem; margin: 0;"></p>
+        <p class="card-text" style="margin-top: 5px;">karyawan</p>
+      </div>
+    </div>
+  </div>
+
+</body>
 </html>

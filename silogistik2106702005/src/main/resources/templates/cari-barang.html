@@ -17,25 +17,38 @@
     <div class="text-center pt-5">
         <h2 style="font-weight: bold;">Cari Barang</h2>
     </div>
-    <div style="text-align: center">
-        <form action="/gudang/cari-barang" method="GET">
-            <div class="form-row align-items-center">
-                <div class="col-auto">
-                    <div class="form-group">
-                        <select name="sku" class="form-control">
-                            <option value="">Pilih Barang</option>
-                            <th:block th:each="barang: ${listBarang}">
-                                <option th:value="${barang.sku}" th:text="${barang.merk}"></option>
-                            </th:block>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-auto">
-                    <button type="submit" class="btn btn-md btn-primary">Cari</button>
-                </div>
+    <br>
+    <form th:action="@{/gudang/cari-barang}" method="GET">
+        <div class="form-group text-center">
+            <div class="input-group mx-auto" style="width: 700px;">
+                <select name="sku" class="form-control form-select">
+                    <option value="">Pilih Barang</option>
+                    <th:block th:each="barang: ${listBarang}">
+                        <option th:value="${barang.sku}" th:text="${barang.merk}"></option>
+                    </th:block>
+                </select>
             </div>
-        </form>
-    </div>
+            <br>
+            <button class="btn btn-primary" type="submit">Cari</button>
+        </div>
+    </form>
+
+    <!--            <div class="form-row align-items-center">-->
+<!--                <div class="col-auto">-->
+<!--                    <div class="form-group">-->
+<!--                        <select name="sku" class="form-control">-->
+<!--                            <option value="">Pilih Barang</option>-->
+<!--                            <th:block th:each="barang: ${listBarang}">-->
+<!--                                <option th:value="${barang.sku}" th:text="${barang.merk}"></option>-->
+<!--                            </th:block>-->
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-auto">-->
+<!--                    <button type="submit" class="btn btn-md btn-primary">Cari</button>-->
+<!--                </div>-->
+<!--            </div>-->
+    </form>
 
     <br>
     <div class="container">
@@ -79,11 +92,22 @@
                 "lengthMenu": [5, 10, 20], // Opsi jumlah item per halaman
                 "searching": true,
                 "info": true,
+                "language": {
+                "emptyTable": "Tidak ada gudang yang memiliki barang tersebut"
+                },
                 "columnDefs": [
-                { "orderable": false, "targets": [2, 3] } // Make action column not sortable
+                { "orderable": false, "targets": [2] } // Make action column not sortable
                 ],
             });
         });
-    </script>
+</script>
+<style>
+    #example td {
+        text-align: center;
+    }
+    #example th {
+        text-align: center;
+    }
+</style>
 </body>
 </html>
